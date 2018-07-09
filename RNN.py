@@ -40,7 +40,7 @@ regressor.add(Dense(units = 1))
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
 
 # Fitting the RNN to the Training set
-regressor.fit(X_train, y_train, batch_size = 180, epochs = 15000)
+regressor.fit(X_train, y_train, batch_size = 180, epochs = 12000)
 # Making the predictions
 test_set = df_test.values
 print("test Values",test_set)
@@ -52,20 +52,27 @@ predicted_Petrol_price = regressor.predict(inputs)
 predicted_Petrol_price = sc.inverse_transform(predicted_Petrol_price)
 print("Predicted Price",predicted_Petrol_price)
 # Visualising the results
-plt.figure(figsize=(25,15), dpi=80, facecolor='w', edgecolor='k')
-ax = plt.gca()  
-plt.plot(test_set, color = 'red', label = 'Real Petrol Price')
-plt.plot(predicted_Petrol_price, color = 'blue', label = 'Predicted Petrol Price')
-plt.title('Petrol Price Prediction', fontsize=40)
-df_test = df_test.reset_index()
-x=df_test.index
-labels = df_test['date']
-plt.xticks(x, labels, rotation = 'vertical')
-for tick in ax.xaxis.get_major_ticks():
-    tick.label1.set_fontsize(18)
-for tick in ax.yaxis.get_major_ticks():
-    tick.label1.set_fontsize(18)
-plt.xlabel('Time', fontsize=40)
-plt.ylabel('Petrol Price(INR)', fontsize=40)
-plt.legend(loc=2, prop={'size': 25})
-plt.show()
+# plt.figure(figsize=(25,15), dpi=80, facecolor='w', edgecolor='k')
+# ax = plt.gca()  
+# plt.plot(test_set, color = 'red', label = 'Real Petrol Price')
+# plt.plot(predicted_Petrol_price, color = 'blue', label = 'Predicted Petrol Price')
+# plt.title('Petrol Price Prediction', fontsize=40)
+# df_test = df_test.reset_index()
+# x=df_test.index
+# labels = df_test['date']
+# plt.xticks(x, labels, rotation = 'vertical')
+# for tick in ax.xaxis.get_major_ticks():
+#     tick.label1.set_fontsize(18)
+# for tick in ax.yaxis.get_major_ticks():
+#     tick.label1.set_fontsize(18)
+# plt.xlabel('Time', fontsize=40)
+# plt.ylabel('Petrol Price(INR)', fontsize=40)
+# plt.legend(loc=2, prop={'size': 25})
+# plt.show()
+# serialize model to JSON
+model_json = regressor.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+regressor.save_weights("model.h5")
+print("Saved model to disk")
