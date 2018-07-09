@@ -1,6 +1,8 @@
 import numpy as np 
 import pandas as pd 
 #from matplotlib import pyplot as plt
+import tensorflow as tf
+from keras.backend import tensorflow_backend as K
 import time
 from keras.models import Sequential,model_from_json
 from keras.layers import Dense
@@ -53,9 +55,8 @@ def build_model(layers):
     print ("Compilation Time : ", time.time() - start)
     return model
 # Fitting the RNN to the Training set
-regressor=build_model([48,24,1])
-input()
-regressor.fit(X_train, y_train, batch_size = 150, epochs = 9000)
+regressor=build_model([1,2,1])
+regressor.fit(X_train, y_train, batch_size = 150, epochs = 12000)
 # Making the predictions
 test_set = df_test.values
 print("test Values",test_set)
