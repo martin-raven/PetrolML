@@ -55,7 +55,7 @@ def build_model(layers):
     print ("Compilation Time : ", time.time() - start)
     return model
 # Fitting the RNN to the Training set
-regressor=build_model([1,2,1])
+regressor=build_model([48,24,1])
 regressor.fit(X_train, y_train, batch_size = 150, epochs = 12000)
 # Making the predictions
 test_set = df_test.values
