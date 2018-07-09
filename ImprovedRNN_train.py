@@ -1,6 +1,6 @@
 import numpy as np 
 import pandas as pd 
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 import time
 from keras.models import Sequential,model_from_json
 from keras.layers import Dense
