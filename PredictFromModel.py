@@ -15,10 +15,11 @@ df['date'] = pd.to_datetime(df['Timestamp'],unit='s').dt.date
 group = df.groupby('date')
 Real_Price = group['Weighted_Price'].mean()
 # print(Real_Price)
-prediction_days = 12
+prediction_days = 1
 df_train= Real_Price[:len(Real_Price)-prediction_days]
 df_test= Real_Price[len(Real_Price)-prediction_days:]
 training_set = df_train.values
+print("Training set",training_set)
 training_set = np.reshape(training_set, (len(training_set), 1))
 training_set = sc.fit_transform(training_set)
 # load json and create model
@@ -66,3 +67,5 @@ with open("model.json", "w") as json_file:
 # serialize weights to HDF5
 regressor.save_weights("model.h5")
 print("Saved model to disk")
+
+
