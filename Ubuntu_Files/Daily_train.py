@@ -16,7 +16,7 @@ group = df.groupby('date')
 Real_Price = group['Weighted_Price'].mean()
 # print(Real_Price)
 # prediction_days = 1
-df_train = Real_Price[len(Real_Price) - 1:]
+df_train = Real_Price[len(Real_Price) - 2:]
 # sc.fit(df_train)
 # df_test = Real_Price[len(Real_Price) - prediction_days:]
 # Data preprocess
@@ -28,9 +28,9 @@ sc = pickle.load( open( "MinMaxScaler.dat", "rb" ) )
 # sc.fit(training_set)
 training_set = sc.transform(training_set)
 print(training_set)
-X_train = training_set
+X_train = training_set[0]
 # print("Train data X",X_train)
-y_train = training_set
+y_train = training_set[1]
 # print("Train data y",y_train)
 X_train = np.reshape(X_train, (len(X_train), 1, 1))
 print(X_train,y_train)
