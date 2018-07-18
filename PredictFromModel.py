@@ -15,7 +15,7 @@ df['date'] = pd.to_datetime(df['Timestamp'],unit='s').dt.date
 group = df.groupby('date')
 Real_Price = group['Weighted_Price'].mean()
 # print(Real_Price)
-prediction_days = 1
+prediction_days = 20
 df_train= Real_Price[:len(Real_Price)-prediction_days]
 df_test= Real_Price[len(Real_Price)-prediction_days:]
 training_set = df_train.values

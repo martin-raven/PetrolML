@@ -6,6 +6,7 @@ import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+from keras.callbacks import EarlyStopping
 # from matplotlib import pyplot as plt
 # pickle.dump( favorite_color, open( "save.p", "wb" ) )
 # favorite_color = pickle.load( open( "save.p", "rb" ) )
@@ -36,7 +37,8 @@ X_train = np.reshape(X_train, (len(X_train), 1, 1))
 regressor = Sequential()
 
 # Adding the input layer and the LSTM layer
-regressor.add(LSTM(units=48, activation='sigmoid', input_shape=(None, 1)))
+regressor.add(LSTM(256, return_sequences=True, input_shape=(None, 1)))
+regressor.add(LSTM(256))
 
 # Adding the output layer
 regressor.add(Dense(units=1))
@@ -45,7 +47,7 @@ regressor.add(Dense(units=1))
 regressor.compile(optimizer='adam', loss='mean_squared_error')
 
 # Fitting the RNN to the Training set
-regressor.fit(X_train, y_train, batch_size=18, epochs=12000)
+regressor.fit(X_train, y_train, batch_size=24, epochs=100,callbacks = [EarlyStopping(monitor='val_loss', min_delta=5e-5, patience=20, verbose=1)])
 # Making the predictions
 test_set = df_test.values
 print("test Values", test_set)
